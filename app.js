@@ -1,10 +1,23 @@
 const express = require('express');
 const logger = require('morgan');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/apiproject');
 
 const app = express();
 
+// Routes
+const users = require('./routes/users');
+
 //Middlewares
 app.use(logger('dev'));
+
+//add body parser
+app.use(bodyParser.json());
+
+app.use('/users', users);
 
 //Routes
 app.get('/', (req, res,next) =>{
