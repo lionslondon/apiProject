@@ -2,14 +2,17 @@ const express = require('express');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/apiproject');
 
 const app = express();
 
+app.use(helmet);
 // Routes
 const users = require('./routes/users');
+const cars = require('./routes/cars');
 
 //Middlewares
 app.use(logger('dev'));
@@ -18,6 +21,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 
 app.use('/users', users);
+app.use('/cars', cars);
 
 //Routes
 app.get('/', (req, res,next) =>{
